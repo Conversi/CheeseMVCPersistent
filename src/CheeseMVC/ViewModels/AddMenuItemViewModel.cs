@@ -1,46 +1,37 @@
 ﻿using CheeseMVC.Models;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
+
 
 namespace CheeseMVC.ViewModels
 {
-    public class AddCheeseViewModel
+    public class AddMenuItemViewModel
     {
-        [Required]
-        [Display(Name = "Cheese Name")]
-        public string Name { get; set; }
+        public Menu Menu { get; set; }
+        public List<SelectListItem> Cheeses { get; set; }
 
-        [Required(ErrorMessage = "Please give your cheese a description")]
-        public string Description { get; set; }
+        public int MenuID { get; set; }
 
-        [Required]
-        [Display(Name = "Category")]
-        public int CategoryID { get; set; }
-        public List<SelectListItem> Categories { get; set; }
+        [Display(Name = "Cheese")]
+        public int CheeseID { get; set; }
 
+        public AddMenuItemViewModel() { }
 
-        public AddCheeseViewModel(IEnumerable<CheeseCategory> categories)
+        public AddMenuItemViewModel(Menu menu, IEnumerable<Cheese> cheeses)
         {
+            Cheeses = new List<SelectListItem>();
 
-            Categories = new List<SelectListItem>();
-
-            foreach (var category in categories)
+            foreach (var cheese in cheeses)
             {
-                Categories.Add(new SelectListItem
+                Cheeses.Add(new SelectListItem
                 {
-                    Value = category.ID.ToString(),
-                    Text = category.Name
+                    Value = cheese.ID.ToString(),
+                    Text = cheese.Name
                 });
-
             }
-            this.Categories = Categories;
+            Menu = menu;
         }
-
-        public AddCheeseViewModel() { }
 
     }
 }
