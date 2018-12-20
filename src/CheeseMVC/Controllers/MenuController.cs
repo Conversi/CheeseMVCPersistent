@@ -63,41 +63,41 @@ namespace CheeseMVC.Controllers
             };
             return View(viewMenuViewModel);
         }
-        //public IActionResult AddItem(int id)
-        //{
-        //    Menu menu = context.Menus.Single(m => m.ID == id);
-        //    List<Cheese> cheeses = context.Cheeses.ToList();
-            //AddMenuItemViewModel addMenuItemViewModel = new AddMenuItemViewModel(menu, cheeses);
-            //return View(addMenuItemViewModel);
-        //}
+        public IActionResult AddItem(int id)
+        {
+            Menu menu = context.Menus.Single(m => m.ID == id);
+            List<Cheese> cheeses = context.Cheeses.ToList();
+            AddMenuItemViewModel addMenuItemViewModel = new AddMenuItemViewModel(menu, cheeses);
+            return View(addMenuItemViewModel);
+        }
 
-        //[HttpPost]
-        //        //public IActionResult AddItem(AddMenuItemViewModel addMenuItemViewModel)
-        //        {
-        //            if (ModelState.IsValid)
-        //            {
-        //                var cheeseID = addMenuItemViewModel.CheeseID;
-        //                var menuID = addMenuItemViewModel.MenuID;
+        [HttpPost]
+        public IActionResult AddItem(AddMenuItemViewModel addMenuItemViewModel)
+        {
+                    if (ModelState.IsValid)
+                    {
+                        var cheeseID = addMenuItemViewModel.CheeseID;
+        var menuID = addMenuItemViewModel.MenuID;
 
-        //                IList<CheeseMenu> existingItems = context.CheeseMenus
-        //                    .Where(cm => cm.CheeseID == cheeseID)
-        //                    .Where(cm => cm.MenuID == menuID).ToList();
+        IList<CheeseMenu> existingItems = context.CheeseMenus
+            .Where(cm => cm.CheeseID == cheeseID)
+            .Where(cm => cm.MenuID == menuID).ToList();
 
-        //                if (existingItems.Count == 0)
-        //                {
-        //                    CheeseMenu cheeseMenu = new CheeseMenu
-        //                    {
-        //                        Cheese = context.Cheeses.Single(c => c.ID == cheeseID),
-        //                        Menu = context.Menus.Single(m => m.ID == menuID)
-        //                    };
+                        if (existingItems.Count == 0)
+                        {
+                            CheeseMenu cheeseMenu = new CheeseMenu
+                            {
+                                Cheese = context.Cheeses.Single(c => c.ID == cheeseID),
+                                Menu = context.Menus.Single(m => m.ID == menuID)
+                            };
 
-        //                    context.CheeseMenus.Add(cheeseMenu);
-        //                    context.SaveChanges();
-        //                }
-        //                return Redirect(string.Format("/Menu/ViewMenu/{0}", addMenuItemViewModel.MenuID));
-        //            }
-        //            return View(addMenuItemViewModel);
-        //        }
+        context.CheeseMenus.Add(cheeseMenu);
+                            context.SaveChanges();
+                        }
+                        return Redirect(string.Format("/Menu/ViewMenu/{0}", addMenuItemViewModel.MenuID));
+                    }
+                    return View(addMenuItemViewModel);
+                }
 
     }
 }
