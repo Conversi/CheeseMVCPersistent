@@ -11,8 +11,8 @@ using System;
 namespace CheeseMVC.Migrations
 {
     [DbContext(typeof(CheeseDbContext))]
-    [Migration("20181220221728_AddCategory")]
-    partial class AddCategory
+    [Migration("20181221004720_CartegoryPurged")]
+    partial class CartegoryPurged
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,9 +26,7 @@ namespace CheeseMVC.Migrations
                     b.Property<int>("ID")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("CartegoryID");
-
-                    b.Property<int?>("CategoryID");
+                    b.Property<int>("CategoryID");
 
                     b.Property<string>("Description");
 
@@ -82,7 +80,8 @@ namespace CheeseMVC.Migrations
                 {
                     b.HasOne("CheeseMVC.Models.CheeseCategory", "Category")
                         .WithMany("Cheeses")
-                        .HasForeignKey("CategoryID");
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("CheeseMVC.Models.CheeseMenu", b =>

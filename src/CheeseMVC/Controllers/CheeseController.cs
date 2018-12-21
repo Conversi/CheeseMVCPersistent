@@ -37,14 +37,15 @@ namespace CheeseMVC.Controllers
             if (ModelState.IsValid)
             {
                 //retrieve the category of cheese by the id that is submitted when the user chooses a selectlist item of categories from the categories selectlist.
-                CheeseCategory newCheeseCategory = context.Categories.Single(c => c.ID == addCheeseViewModel.CategoryID);
+                CheeseCategory newCheeseCategory = context.Categories.SingleOrDefault(c => c.ID == addCheeseViewModel.CategoryID);
 
                 //Add the new cheese to my existing cheeses
                 Cheese newCheese = new Cheese
-                    {
-                        Name = addCheeseViewModel.Name,
-                        Description = addCheeseViewModel.Description,
-                        Category = newCheeseCategory
+                {
+                    Name = addCheeseViewModel.Name,
+                    Description = addCheeseViewModel.Description,
+                    Category = newCheeseCategory,
+                    CategoryID = addCheeseViewModel.CategoryID,
                     };
 
                 context.Cheeses.Add(newCheese);
